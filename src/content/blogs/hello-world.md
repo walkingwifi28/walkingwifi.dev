@@ -4,7 +4,7 @@ updatedAt: '2026-01-06T00:00:00.000Z'
 title: 'Hello, World!'
 thumbnail: >-
   /ce-mianni-zhaorasaretatawakaaru-jin-dai-dena-dou-shi-jian-zhuno-meishii-kong-zhongshotto.jpg
- ---
+---
 
 ## Hello World!
 
