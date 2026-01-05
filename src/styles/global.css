@@ -37,3 +37,95 @@ body {
     font-family: "Noto Sans JP", sans-serif;
     font-optical-sizing: auto;
 }
+
+/* ブログコンテンツ用スタイル（microCMSから動的に挿入されるHTML向け） */
+.post h1 {
+    @apply text-3xl font-bold text-[var(--color-text)] mt-8 mb-4 pb-2 border-b-2 border-[var(--color-primary)];
+}
+
+.post h2 {
+    @apply text-2xl font-semibold text-[var(--color-text)] mt-7 mb-3 pb-1.5 border-b border-[var(--color-border)];
+}
+
+.post h3 {
+    @apply text-xl font-semibold text-[var(--color-text)] mt-6 mb-2;
+}
+
+.post h4 {
+    @apply text-lg font-semibold text-[var(--color-text)] mt-5 mb-2;
+}
+
+.post p {
+    @apply my-4 text-[var(--color-text)];
+}
+
+.post ul,
+.post ol {
+    @apply my-4 pl-6 text-[var(--color-text)];
+}
+
+.post ul {
+    @apply list-disc;
+}
+
+.post ol {
+    @apply list-decimal;
+}
+
+.post li {
+    @apply my-2 leading-relaxed;
+}
+
+.post li>ul,
+.post li>ol {
+    @apply my-1;
+}
+
+.post blockquote {
+    @apply my-6 py-4 px-5 bg-[var(--color-bg-secondary)] border-l-4 border-[var(--color-primary)] rounded-r-lg text-[var(--color-text-secondary)] italic;
+}
+
+.post blockquote p {
+    @apply my-2;
+}
+
+.post code {
+    @apply font-mono text-sm bg-[var(--color-bg-secondary)] text-[var(--color-primary)] py-0.5 px-1.5 rounded;
+}
+
+.post pre {
+    @apply my-6 p-4 bg-[#1e1e1e] rounded-lg overflow-x-auto;
+}
+
+.post pre code {
+    @apply bg-transparent text-[#d4d4d4] p-0 text-sm leading-relaxed;
+}
+
+.post a {
+    @apply text-[var(--color-primary)] no-underline border-b border-transparent transition-colors duration-200 hover:border-[var(--color-primary)];
+}
+
+.post img {
+    @apply max-w-full h-auto my-6 mx-auto block rounded-lg shadow-md;
+}
+
+.post hr {
+    @apply my-8 border-0 border-t border-[var(--color-border)];
+}
+
+.post table {
+    @apply w-full my-6 border-collapse;
+}
+
+.post th,
+.post td {
+    @apply py-3 px-4 border border-[var(--color-border)] text-left;
+}
+
+.post th {
+    @apply bg-[var(--color-bg-secondary)] font-semibold;
+}
+
+.post tr:hover {
+    @apply bg-[var(--color-bg-secondary)];
+}

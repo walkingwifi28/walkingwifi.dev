@@ -100,4 +100,4 @@ microCMS SDKクライアントの設定とAPI呼び出し関数:
 - ダークモードはCSS変数として準備済み（現在コメントアウト）
 - 静的サイト生成 (SSG) を使用
 - ブログ詳細ページは動的ルーティング (`[blogId].astro`)
-- astroファイル内ではTailWind CSSを優先的に使用
+- astroファイル内では<style>タグは使用せず、TailWind CSSを必ず使用してください
