@@ -1,5 +1,5 @@
 // SDK利用準備
-import type { MicroCMSQueries, MicroCMSListContent } from "microcms-js-sdk";
+import type { MicroCMSQueries, MicroCMSListContent, MicroCMSImage } from "microcms-js-sdk";
 import { createClient } from "microcms-js-sdk";
 
 const client = createClient({
@@ -8,9 +8,15 @@ const client = createClient({
 });
 
 // 型定義
+export type Tag = {
+    name: string;
+} & MicroCMSListContent;
+
 export type Blog = {
     title: string;
     content: string;
+    eyecatch?: MicroCMSImage;
+    tag?: Tag[];
 } & MicroCMSListContent;
 
 // APIの呼び出し
