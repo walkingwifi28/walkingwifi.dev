@@ -1,23 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import BlogCard from "../components/BlogCard.astro";
-import type { Blog } from "../library/microcms";
+import { getBlogs, type Blog } from "../library/blogs";
 
-//microCMS呼び出し
-import { getBlogs } from "../library/microcms";
-const response = await getBlogs({
-	fields: [
-		"id",
-		"title",
-		"content",
-		"eyecatch",
-		"tag",
-		"createdAt",
-		"updatedAt",
-	],
-	orders: "-createdAt",
-	limit: 3,
-});
+// ブログ一覧を取得
+const blogs = getBlogs();
 ---
 
 <Layout title="My first blog with Astro">
@@ -25,11 +12,7 @@ const response = await getBlogs({
 		<section>
 			<h1 class="text-2xl font-bold mb-6">最新記事</h1>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{
-					response.contents.map((blog: Blog) => (
-						<BlogCard blog={blog} />
-					))
-				}
+				{blogs.map((blog: Blog) => <BlogCard blog={blog} />)}
 			</div>
 		</section>
 	</main>

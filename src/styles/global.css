@@ -38,7 +38,7 @@ body {
     font-optical-sizing: auto;
 }
 
-/* ブログコンテンツ用スタイル（microCMSから動的に挿入されるHTML向け） */
+/* ブログコンテンツ用スタイル（動的に挿入されるHTML向け） */
 .post h1 {
     @apply text-3xl font-bold text-[var(--color-text)] mt-8 mb-4 pb-2 border-b-2 border-[var(--color-primary)];
 }
