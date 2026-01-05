@@ -1,0 +1,98 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, render, getEntries } from "astro:content";
+import CalendarIcon from "../../assets/icons/calendar.svg";
+import RefreshIcon from "../../assets/icons/refresh.svg";
+import Tag from "../../components/Tag.astro";
+
+// 全ブログ記事のパスを生成
+export async function getStaticPaths() {
+    const blogs = await getCollection("blogs");
+    return blogs.map((blog) => ({
+        params: { slug: blog.id.replace(/\.md$/, "") },
+        props: { blog },
+    }));
+}
+
+const { blog } = Astro.props;
+// ファイルのタイムスタンプを取得
+import fs from "node:fs";
+import path from "node:path";
+
+const getFileStats = (id: string) => {
+    try {
+        const filePath = path.join(process.cwd(), "src/content/blogs", id);
+        const stats = fs.statSync(filePath);
+        return {
+            updatedAt: stats.mtime,
+            createdAt: stats.birthtime,
+        };
+    } catch (e) {
+        return {
+            updatedAt: undefined,
+            createdAt: undefined,
+        };
+    }
+};
+
+const { updatedAt, createdAt } = getFileStats(blog.id);
+
+const { Content } = await render(blog);
+
+// 日付フォーマット（YYYY.MM.DD）
+const formatDate = (date: Date | undefined): string => {
+    if (!date) return "";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+};
+---
+
+<Layout title={blog.data.title}>
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <h1
+            class="text-3xl font-bold text-[var(--color-text)] mb-4 leading-tight"
+        >
+            {blog.data.title}
+        </h1>
+
+        <!-- 日付情報 -->
+        <div class="flex items-center gap-6 text-zinc-500 text-sm mb-4">
+            <!-- 作成日 -->
+            {
+                createdAt && (
+                    <div class="flex items-center gap-1.5">
+                        <img src={CalendarIcon.src} alt="作成日" />
+                        <span>{formatDate(createdAt)}</span>
+                    </div>
+                )
+            }
+            <!-- 更新日 -->
+            {
+                updatedAt && (
+                    <div class="flex items-center gap-1.5">
+                        <img src={RefreshIcon.src} alt="更新日" />
+                        <span>{formatDate(updatedAt)}</span>
+                    </div>
+                )
+            }
+        </div>
+
+        {
+            blog.data.thumbnail && (
+                <div class="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video">
+                    <img
+                        src={blog.data.thumbnail}
+                        alt={blog.data.title}
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+            )
+        }
+
+        <div class="post mt-8 leading-relaxed">
+            <Content />
+        </div>
+    </main>
+</Layout>

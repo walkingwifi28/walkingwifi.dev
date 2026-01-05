@@ -1,10 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import BlogCard from "../components/BlogCard.astro";
-import { getBlogs, type Blog } from "../library/blogs";
+import { getCollection } from "astro:content";
 
-// ブログ一覧を取得
-const blogs = getBlogs();
+// ブログ一覧を取得（作成日降順）
+import fs from "node:fs";
+import path from "node:path";
+
+const getFileBirthtime = (id: string) => {
+	try {
+		const filePath = path.join(process.cwd(), "src/content/blogs", id);
+		const stats = fs.statSync(filePath);
+		return stats.birthtime.getTime();
+	} catch (e) {
+		return 0;
+	}
+};
+
+const blogs = await getCollection("blogs");
+blogs.sort((a, b) => {
+	const dateA = getFileBirthtime(a.id);
+	const dateB = getFileBirthtime(b.id);
+	return dateB - dateA;
+});
 ---
 
 <Layout title="My first blog with Astro">
@@ -12,7 +30,7 @@ const blogs = getBlogs();
 		<section>
 			<h1 class="text-2xl font-bold mb-6">最新記事</h1>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				{blogs.map((blog: Blog) => <BlogCard blog={blog} />)}
+				{blogs.map((blog) => <BlogCard blog={blog} />)}
 			</div>
 		</section>
 	</main>
