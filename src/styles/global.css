@@ -6,7 +6,7 @@
     --color-bg-secondary: #e4e4e7;
     --color-text: #27272a;
     --color-text-secondary: #71717a;
-    --color-primary: #3b82f6;
+    --color-primary: #4361EE;
     --color-border: #e5e7eb;
     --color-card-bg: #ffffff;
 }
@@ -17,7 +17,7 @@
   --color-bg-secondary: #3f3f46;
   --color-text: #fafafa;
   --color-text-secondary: #a1a1aa;
-  --color-primary: #60a5fa;
+  --color-primary: #738AFF;
   --color-border: #52525b;
 }
 */
@@ -103,6 +103,17 @@ body {
 
 .post a {
     @apply text-[var(--color-primary)] no-underline border-b border-transparent transition-colors duration-200 hover:border-[var(--color-primary)];
+}
+
+/* 外部リンク（破線の下線） */
+.post a[href^="http://"],
+.post a[href^="https://"] {
+    @apply border-b border-dashed border-[var(--color-primary)] font-medium;
+}
+
+.post a[href^="http://"]:hover,
+.post a[href^="https://"]:hover {
+    @apply border-solid;
 }
 
 .post img {
