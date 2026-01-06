@@ -40,11 +40,11 @@ body {
 
 /* ブログコンテンツ用スタイル（動的に挿入されるHTML向け） */
 .post h1 {
-    @apply text-3xl font-bold text-[var(--color-text)] mt-8 mb-4 pb-2 border-b-2 border-[var(--color-primary)];
+    @apply text-3xl font-bold text-[var(--color-text)] mt-16 mb-4 pb-2 border-b-2 border-[var(--color-primary)];
 }
 
 .post h2 {
-    @apply text-2xl font-semibold text-[var(--color-text)] mt-7 mb-3 pb-1.5 border-b border-[var(--color-border)];
+    @apply text-2xl font-semibold text-[var(--color-text)] mt-16 mb-3 pb-1.5 border-b border-[var(--color-border)];
 }
 
 .post h3 {
