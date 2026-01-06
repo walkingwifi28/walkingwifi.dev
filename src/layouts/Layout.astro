@@ -17,6 +17,20 @@ import Header from "../components/Header.astro";
 			rel="stylesheet"
 		/>
 		<title>walkingwifiのテックブログ</title>
+
+		<script
+			type="text/partytown"
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-DF5Y0034SQ"
+		></script>
+		<script type="text/partytown">
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+			gtag("config", "G-DF5Y0034SQ");
+		</script>
 	</head>
 	<body>
 		<Header />

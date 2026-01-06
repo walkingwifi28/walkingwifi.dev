@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/partytown": "^2.1.4",
     "@tailwindcss/vite": "^4.1.18",
     "@tinacms/cli": "^2.0.6",
     "astro": "^5.16.6",
