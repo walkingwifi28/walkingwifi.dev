@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection, render, getEntries } from "astro:content";
+import { getCollection, render, getEntry } from "astro:content";
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import RefreshIcon from "../../assets/icons/refresh.svg";
 import Tag from "../../components/Tag.astro";
@@ -38,6 +38,33 @@ const getFileStats = (id: string) => {
 const { updatedAt, createdAt } = getFileStats(blog.id);
 
 const { Content } = await render(blog);
+
+// タグ情報を取得（存在しないタグはスキップ）
+
+// TinaCMS のパス形式 "src/content/tags/xxx.md" から ID を抽出
+const extractTagId = (tagPath: string) => {
+    const match = tagPath.match(/src\/content\/tags\/(.+)\.md$/);
+    return match ? match[1] : null;
+};
+
+const tagPaths = blog.data.tags?.map((t) => t.tag) || [];
+const tagPromises = tagPaths.map(async (tagPath) => {
+    const tagId = extractTagId(tagPath);
+    if (!tagId) return null;
+    try {
+        const entry = await getEntry("tags", tagId);
+        return entry;
+    } catch {
+        return null;
+    }
+});
+
+const rawTags = await Promise.all(tagPromises);
+const tags = rawTags.filter((t) => t !== null);
+
+// 存在しないタグを検出
+const missingTagCount = tagPaths.length - tags.length;
+const hasMissingTags = missingTagCount > 0;
 
 // 日付フォーマット（YYYY.MM.DD）
 const formatDate = (date: Date | undefined): string => {
@@ -97,6 +124,17 @@ const ogpImagePath = `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
                 )
             }
         </div>
+
+        <!-- タグ -->
+        {
+            tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mb-6">
+                    {tags.map((t) => (
+                        <Tag name={t.data.name} />
+                    ))}
+                </div>
+            )
+        }
 
         <div class="post mt-8 leading-relaxed">
             <Content />

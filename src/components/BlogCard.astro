@@ -3,12 +3,35 @@ import CalendarIcon from "../assets/icons/calendar.svg";
 import RefreshIcon from "../assets/icons/refresh.svg";
 import Tag from "./Tag.astro";
 import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
 
 interface Props {
     blog: CollectionEntry<"blogs">;
 }
 
 const { blog } = Astro.props;
+
+// タグ情報を取得（存在しないタグはスキップ）
+// TinaCMS のパス形式 "src/content/tags/xxx.md" から ID を抽出
+const extractTagId = (tagPath: string) => {
+    const match = tagPath.match(/src\/content\/tags\/(.+)\.md$/);
+    return match ? match[1] : null;
+};
+
+const tagPaths = blog.data.tags?.map((t) => t.tag) || [];
+const tagPromises = tagPaths.map(async (tagPath) => {
+    const tagId = extractTagId(tagPath);
+    if (!tagId) return null;
+    try {
+        const entry = await getEntry("tags", tagId);
+        return entry;
+    } catch {
+        return null;
+    }
+});
+
+const rawTags = await Promise.all(tagPromises);
+const tags = rawTags.filter((t) => t !== null);
 
 // ファイルのタイムスタンプを取得
 import fs from "node:fs";
@@ -98,6 +121,15 @@ const formatDate = (date: Date | undefined): string => {
         <h2 class="text-lg font-bold leading-relaxed m-0 mb-2 text-zinc-800">
             {blog.data.title}
         </h2>
+        {
+            tags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mb-2">
+                    {tags.map((t) => (
+                        <Tag name={t.data.name} />
+                    ))}
+                </div>
+            )
+        }
 
         <p
             class="text-sm text-zinc-500 m-0 leading-relaxed line-clamp-3 min-h-[4.5em]"

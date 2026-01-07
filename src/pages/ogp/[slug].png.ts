@@ -1,5 +1,5 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import satori from "satori";
 import sharp from "sharp";
 
@@ -25,19 +25,61 @@ async function loadGoogleFont(
     return await (await fetch(fontUrl)).arrayBuffer();
 }
 
+// TinaCMS のパス形式 "src/content/tags/xxx.md" から ID を抽出
+function extractTagId(tagPath: string): string | null {
+    const match = tagPath.match(/src\/content\/tags\/(.+)\.md$/);
+    return match ? match[1] : null;
+}
+
 export const getStaticPaths: GetStaticPaths = async () => {
     const blogs = await getCollection("blogs");
-    return blogs.map((blog) => ({
-        params: { slug: blog.id.replace(/\.md$/, "") },
-        props: { title: blog.data.title },
-    }));
+    return await Promise.all(
+        blogs.map(async (blog) => {
+            // タグ情報を取得（存在しないタグはスキップ）
+            const tagPaths = blog.data.tags?.map((t) => t.tag) || [];
+            const tagPromises = tagPaths.map(async (tagPath) => {
+                const tagId = extractTagId(tagPath);
+                if (!tagId) return null;
+                try {
+                    const entry = await getEntry("tags", tagId);
+                    return entry;
+                } catch {
+                    return null;
+                }
+            });
+
+            const rawTags = await Promise.all(tagPromises);
+            const tags = rawTags.filter((t) => t !== null);
+            const tagNames = tags.map((t) => t.data.name);
+
+            return {
+                params: { slug: blog.id.replace(/\.md$/, "") },
+                props: { title: blog.data.title, tagNames },
+            };
+        }),
+    );
 };
 
 export const GET: APIRoute = async ({ props }) => {
-    const { title } = props as { title: string };
+    const { title, tagNames } = props as { title: string; tagNames: string[] };
 
     // フォントを読み込み
     const fontData = await loadGoogleFont("Noto+Sans+JP", 700);
+
+    // タグ要素を生成
+    const tagElements = tagNames.map((name) => ({
+        type: "span",
+        props: {
+            style: {
+                fontSize: "20px",
+                padding: "4px 12px",
+                backgroundColor: "#e4e4e7",
+                borderRadius: "9999px",
+                color: "#71717a",
+            },
+            children: `#${name}`,
+        },
+    }));
 
     // satori で SVG を生成
     const svg = await satori(
@@ -82,18 +124,42 @@ export const GET: APIRoute = async ({ props }) => {
                                         children: title,
                                     },
                                 },
-                                // walkingwifi（右下）
+                                // 下部エリア（タグ左、walkingwifi右）
                                 {
                                     type: "div",
                                     props: {
                                         style: {
-                                            fontSize: "32px",
-                                            fontWeight: 400,
-                                            color: "#27272a",
-                                            textAlign: "right",
-                                            alignSelf: "flex-end",
+                                            display: "flex",
+                                            justifyContent: "space-between",
+                                            alignItems: "flex-end",
+                                            width: "100%",
                                         },
-                                        children: "walkingwifi",
+                                        children: [
+                                            // タグ（左）
+                                            {
+                                                type: "div",
+                                                props: {
+                                                    style: {
+                                                        display: "flex",
+                                                        flexWrap: "wrap",
+                                                        gap: "8px",
+                                                    },
+                                                    children: tagElements,
+                                                },
+                                            },
+                                            // walkingwifi（右）
+                                            {
+                                                type: "div",
+                                                props: {
+                                                    style: {
+                                                        fontSize: "32px",
+                                                        fontWeight: 400,
+                                                        color: "#27272a",
+                                                    },
+                                                    children: "walkingwifi",
+                                                },
+                                            },
+                                        ],
                                     },
                                 },
                             ],

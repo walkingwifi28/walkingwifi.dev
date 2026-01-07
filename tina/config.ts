@@ -54,10 +54,48 @@ export default defineConfig({
             },
           },
           {
+            type: "object",
+            name: "tags",
+            label: "タグ",
+            list: true,
+            fields: [
+              {
+                type: "reference",
+                name: "tag",
+                label: "タグ",
+                collections: ["tag"],
+              },
+            ],
+            ui: {
+              itemProps: (item: { tag?: string }) => {
+                const tagPath = item?.tag;
+                if (tagPath) {
+                  const tagName = tagPath.split("/").pop()?.replace(".md", "");
+                  return { label: tagName };
+                }
+                return { label: "タグを選択" };
+              },
+            },
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",
             isBody: true,
+          },
+        ],
+      },
+      {
+        name: "tag",
+        label: "Tags",
+        path: "src/content/tags",
+        fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "タグ名",
+            isTitle: true,
+            required: true,
           },
         ],
       },
