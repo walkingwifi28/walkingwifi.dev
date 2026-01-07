@@ -121,15 +121,10 @@ const formatDate = (date: Date | undefined): string => {
         <h2 class="text-lg font-bold leading-relaxed m-0 mb-2 text-zinc-800">
             {blog.data.title}
         </h2>
-        {
-            tags.length > 0 && (
-                <div class="flex flex-wrap gap-1 mb-2">
-                    {tags.map((t) => (
-                        <Tag name={t.data.name} />
-                    ))}
-                </div>
-            )
-        }
+        {/* タグ（ない場合も高さを確保） */}
+        <div class="flex flex-wrap gap-1 mb-2 min-h-[1.75rem]">
+            {tags.map((t) => t && <Tag name={t.data.name} />)}
+        </div>
 
         <p
             class="text-sm text-zinc-500 m-0 leading-relaxed line-clamp-3 min-h-[4.5em]"
