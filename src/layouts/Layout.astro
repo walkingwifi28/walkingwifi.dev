@@ -69,14 +69,16 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 			gtag("config", "G-DF5Y0034SQ");
 		</script>
 	</head>
-	<body>
+	<body class="flex flex-col min-h-screen">
 		<Header />
-		<slot />
+		<main class="flex-1">
+			<slot />
+		</main>
 		<footer
 			class="mt-16 py-8 border-t border-[var(--color-border)] text-left text-sm text-[var(--color-text-secondary)]"
 		>
 			<div
-				class="container mx-auto flex h-full flex-col justify-center gap-4 p-4"
+				class="max-w-6xl mx-auto flex h-full flex-col justify-center gap-4 px-4"
 			>
 				<p>© 2026 - Copyright walkingwifi, All Rights Reserved.</p>
 				<p class="mt-2">
