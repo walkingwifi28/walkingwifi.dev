@@ -46,6 +46,14 @@ export default defineConfig({
             label: "サムネイル",
           },
           {
+            type: "string",
+            name: "description",
+            label: "説明",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",

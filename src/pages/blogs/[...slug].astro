@@ -48,9 +48,7 @@ const formatDate = (date: Date | undefined): string => {
     return `${year}.${month}.${day}`;
 };
 
-// OGP画像のパスを決定（サムネイルがあればそれを使用、なければ動的生成）
-const ogpImagePath =
-    blog.data.thumbnail || `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
+const ogpImagePath = `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
 ---
 
 <Layout title={blog.data.title} image={ogpImagePath}>

@@ -95,8 +95,14 @@ const formatDate = (date: Date | undefined): string => {
                 )
             }
         </div>
-        <h2 class="text-lg font-bold leading-relaxed m-0 mb-3 text-zinc-800">
+        <h2 class="text-lg font-bold leading-relaxed m-0 mb-2 text-zinc-800">
             {blog.data.title}
         </h2>
+
+        <p
+            class="text-sm text-zinc-500 m-0 leading-relaxed line-clamp-3 min-h-[4.5em]"
+        >
+            {blog.data.description || ""}
+        </p>
     </div>
 </a>
