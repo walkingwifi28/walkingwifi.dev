@@ -47,9 +47,13 @@ const formatDate = (date: Date | undefined): string => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
 };
+
+// OGP画像のパスを決定（サムネイルがあればそれを使用、なければ動的生成）
+const ogpImagePath =
+    blog.data.thumbnail || `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
 ---
 
-<Layout title={blog.data.title}>
+<Layout title={blog.data.title} image={ogpImagePath}>
     <main class="max-w-6xl mx-auto px-4 py-8">
         {
             blog.data.thumbnail && (

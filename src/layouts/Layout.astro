@@ -1,10 +1,30 @@
 ---
 import "../styles/global.css";
 import Header from "../components/Header.astro";
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+}
+
+const siteUrl = "https://walkingwifi.dev";
+const defaultTitle = "walkingwifiのテックブログ";
+const defaultDescription = "技術ブログです";
+
+const {
+	title = defaultTitle,
+	description = defaultDescription,
+	image,
+} = Astro.props;
+
+const pageTitle = title === defaultTitle ? title : `${title} | ${defaultTitle}`;
+const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/ogp/default.png`;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +36,18 @@ import Header from "../components/Header.astro";
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap"
 			rel="stylesheet"
 		/>
-		<title>walkingwifiのテックブログ</title>
+		<title>{pageTitle}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- OGP -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:type" content="article" />
+		<meta property="og:site_name" content={defaultTitle} />
+		<meta property="og:locale" content="ja_JP" />
 
 		<script
 			type="text/partytown"
