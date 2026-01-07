@@ -51,7 +51,11 @@ const formatDate = (date: Date | undefined): string => {
 const ogpImagePath = `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
 ---
 
-<Layout title={blog.data.title} image={ogpImagePath}>
+<Layout
+    title={blog.data.title}
+    description={blog.data.description}
+    image={ogpImagePath}
+>
     <main class="max-w-6xl mx-auto px-4 py-8">
         {
             blog.data.thumbnail && (
