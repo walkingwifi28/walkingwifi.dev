@@ -34,21 +34,62 @@ const siteName = "walkingwifi.dev";
 
     if (header) {
         const headerHeight = header.offsetHeight;
+        const scrollThreshold = 16; // 約1行分のスクロール量
+        let scrollAnchor = window.scrollY; // スクロール方向が変わった時の基準点
+        let lastScrollY = window.scrollY;
+        let scrollDirection = 0; // 1: down, -1: up, 0: initial
+        let isHidden = false;
 
-        const handleScroll = () => {
-            if (window.scrollY > headerHeight) {
+        const hideHeader = () => {
+            if (!isHidden) {
                 header.classList.add(
                     "opacity-0",
                     "-translate-y-full",
                     "pointer-events-none",
                 );
-            } else {
+                isHidden = true;
+            }
+        };
+
+        const showHeader = () => {
+            if (isHidden) {
                 header.classList.remove(
                     "opacity-0",
                     "-translate-y-full",
                     "pointer-events-none",
                 );
+                isHidden = false;
             }
+        };
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            const instantDelta = currentScrollY - lastScrollY;
+            const newDirection =
+                instantDelta > 0 ? 1 : instantDelta < 0 ? -1 : scrollDirection;
+
+            // スクロール方向が変わったら基準点をリセット
+            if (newDirection !== scrollDirection && newDirection !== 0) {
+                scrollAnchor = lastScrollY;
+                scrollDirection = newDirection;
+            }
+
+            const cumulativeDelta = currentScrollY - scrollAnchor;
+
+            // ページ上部では常に表示
+            if (currentScrollY <= headerHeight) {
+                showHeader();
+            }
+            // 上方向に累積スクロール（scrollThreshold以上）で表示
+            else if (cumulativeDelta < -scrollThreshold) {
+                showHeader();
+            }
+            // 下方向にスクロールで隠す（即座に）
+            else if (scrollDirection === 1 && currentScrollY > headerHeight) {
+                hideHeader();
+            }
+
+            lastScrollY = currentScrollY;
         };
 
         window.addEventListener("scroll", handleScroll);
