@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { getCollection, render, getEntry } from "astro:content";
-import CalendarIcon from "../../assets/icons/calendar.svg";
-import RefreshIcon from "../../assets/icons/refresh.svg";
+import CalendarIcon from "../../components/icons/CalendarIcon.astro";
+import RefreshIcon from "../../components/icons/RefreshIcon.astro";
 import Tag from "../../components/Tag.astro";
 
 // 全ブログ記事のパスを生成
@@ -104,12 +104,14 @@ const ogpImagePath = `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
         </h1>
 
         <!-- 日付情報 -->
-        <div class="flex items-center gap-6 text-zinc-500 text-sm mb-4">
+        <div
+            class="flex items-center gap-6 text-[var(--color-text-secondary)] text-sm mb-4"
+        >
             <!-- 作成日 -->
             {
                 createdAt && (
                     <div class="flex items-center gap-1.5">
-                        <img src={CalendarIcon.src} alt="作成日" />
+                        <CalendarIcon />
                         <span>{formatDate(createdAt)}</span>
                     </div>
                 )
@@ -118,7 +120,7 @@ const ogpImagePath = `/ogp/${blog.id.replace(/\.md$/, "")}.png`;
             {
                 updatedAt && (
                     <div class="flex items-center gap-1.5">
-                        <img src={RefreshIcon.src} alt="更新日" />
+                        <RefreshIcon />
                         <span>{formatDate(updatedAt)}</span>
                     </div>
                 )
