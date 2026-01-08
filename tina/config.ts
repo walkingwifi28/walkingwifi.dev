@@ -70,6 +70,12 @@ export default defineConfig({
             },
           },
           {
+            type: "boolean",
+            name: "draft",
+            label: "下書き",
+            description: "チェックを入れると公開されません",
+          },
+          {
             type: "object",
             name: "tags",
             label: "タグ",

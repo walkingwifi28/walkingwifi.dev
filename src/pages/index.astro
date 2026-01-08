@@ -17,7 +17,13 @@ const getFileBirthtime = (id: string) => {
 	}
 };
 
-const blogs = await getCollection("blogs");
+const allBlogs = await getCollection("blogs");
+
+// 本番環境では下書きを除外、開発環境では全て表示
+const blogs = import.meta.env.PROD
+	? allBlogs.filter((blog) => !blog.data.draft)
+	: allBlogs;
+
 blogs.sort((a, b) => {
 	const dateA = getFileBirthtime(a.id);
 	const dateB = getFileBirthtime(b.id);
