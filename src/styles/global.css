@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+/* テーマ切り替えアニメーション (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+}
+
+::view-transition-old(root) {
+    animation-name: none;
+}
+
+::view-transition-new(root) {
+    animation-name: theme-reveal;
+}
+
+@keyframes theme-reveal {
+    from {
+        clip-path: circle(0px at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
+    }
+
+    to {
+        clip-path: circle(var(--theme-toggle-radius, 100vmax) at var(--theme-toggle-x, 50%) var(--theme-toggle-y, 50%));
+    }
+}
+
 /* ライトテーマ（デフォルト） */
 :root {
     --color-bg: #f4f4f5;
@@ -9,18 +34,22 @@
     --color-primary: #4361EE;
     --color-border: #d1d5db;
     --color-card-bg: #ffffff;
+    --color-header-bg: #ffffff;
+    --dot-size: 1.2px;
 }
 
-/* 将来のダークモード用（コメントアウト）
+/* ダークテーマ */
 .dark {
-  --color-bg: #27272a;
-  --color-bg-secondary: #3f3f46;
-  --color-text: #fafafa;
-  --color-text-secondary: #9ca3af;
-  --color-primary: #738AFF;
-  --color-border: #3f3f46;
+    --color-bg: #27272a;
+    --color-bg-secondary: #3f3f46;
+    --color-text: #fafafa;
+    --color-text-secondary: #9ca3af;
+    --color-primary: #738AFF;
+    --color-border: #3f3f46;
+    --color-card-bg: #18181b;
+    --color-header-bg: #27272a;
+    --dot-size: 1px;
 }
-*/
 
 /* ベーススタイル */
 html {
@@ -33,7 +62,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--color-bg);
-    background-image: radial-gradient(circle, var(--color-bg-secondary) 1.2px, transparent 1.2px);
+    background-image: radial-gradient(circle, var(--color-bg-secondary) var(--dot-size), transparent var(--dot-size));
     background-size: 24px 24px;
     color: var(--color-text);
     font-family: "Noto Sans JP", sans-serif;
