@@ -11,6 +11,8 @@ const blogsCollection = defineCollection({
     type: 'content',
     schema: z.object({
         title: z.string(),
+        createdAt: z.coerce.date().optional(),
+        updatedAt: z.coerce.date().optional(),
         thumbnail: z.string().optional(),
         description: z.string().optional(),
         // TinaCMS は参照を "src/content/tags/xxx.md" 形式で保存するため、

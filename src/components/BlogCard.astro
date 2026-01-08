@@ -33,34 +33,16 @@ const tagPromises = tagPaths.map(async (tagPath) => {
 const rawTags = await Promise.all(tagPromises);
 const tags = rawTags.filter((t) => t !== null);
 
-// ファイルのタイムスタンプを取得
-import fs from "node:fs";
-import path from "node:path";
+// フロントマターから日付を取得
+const createdAt = blog.data.createdAt;
+const updatedAt = blog.data.updatedAt;
 
-const getFileStats = (id: string) => {
-    try {
-        const filePath = path.join(process.cwd(), "src/content/blogs", id);
-        const stats = fs.statSync(filePath);
-        return {
-            updatedAt: stats.mtime,
-            createdAt: stats.birthtime,
-        };
-    } catch (e) {
-        return {
-            updatedAt: undefined,
-            createdAt: undefined,
-        };
-    }
-};
-
-const { updatedAt, createdAt } = getFileStats(blog.id);
-
-// 日付フォーマット（YYYY.MM.DD）
+// 日付フォーマット（YYYY.MM.DD）- UTC日付をそのまま使用
 const formatDate = (date: Date | undefined): string => {
     if (!date) return "";
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(date.getUTCDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
 };
 ---

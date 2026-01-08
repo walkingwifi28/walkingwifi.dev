@@ -41,6 +41,22 @@ export default defineConfig({
             required: true,
           },
           {
+            type: "datetime",
+            name: "createdAt",
+            label: "作成日",
+            ui: {
+              dateFormat: "YYYY.MM.DD",
+            },
+          },
+          {
+            type: "datetime",
+            name: "updatedAt",
+            label: "更新日",
+            ui: {
+              dateFormat: "YYYY.MM.DD",
+            },
+          },
+          {
             type: "image",
             name: "thumbnail",
             label: "サムネイル",

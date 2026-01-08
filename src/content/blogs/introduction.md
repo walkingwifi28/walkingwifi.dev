@@ -1,5 +1,7 @@
 ---
 title: はじめまして
+createdAt: 2026-01-06T00:00:00.000Z
+updatedAt: 2026-01-06T22:12:21.135Z
 thumbnail: /IMG_4548.jpg
 description: >-
   名古屋でIT企業に勤めているwalkingwifiです。
