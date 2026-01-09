@@ -43,6 +43,12 @@ Astro
 
 ブログはページ内のコンテンツが目まぐるしく変わるものでもないので、SSG(静的サイト生成)対応のフレームワークが適していると考え、Next.jsとNuxt.jsとAstroに絞り、Next.jsとNuxt.jsはブログ構築には過剰すぎるので、Astroを採用しました。
 
+git commitで画像圧縮
+
+buildでogp画像生成
+
+tinacmsの使用感
+
 ## CMS（コンテンツ管理システム）
 
 TinaCMSを採用しています。
