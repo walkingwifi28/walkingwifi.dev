@@ -49,12 +49,14 @@ const tags = rawTags.filter((t) => t !== null);
 const missingTagCount = tagPaths.length - tags.length;
 const hasMissingTags = missingTagCount > 0;
 
-// 日付フォーマット（YYYY.MM.DD）- UTC日付をそのまま使用
+// 日付フォーマット（YYYY.MM.DD）- UTC+9（JST）として表示
 const formatDate = (date: Date | undefined): string => {
     if (!date) return "";
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-    const day = String(date.getUTCDate()).padStart(2, "0");
+    // UTC時刻に9時間（JST）を加算
+    const jstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+    const year = jstDate.getUTCFullYear();
+    const month = String(jstDate.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(jstDate.getUTCDate()).padStart(2, "0");
     return `${year}.${month}.${day}`;
 };
 

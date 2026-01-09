@@ -46,7 +46,9 @@ export default defineConfig({
             label: "作成日",
             ui: {
               dateFormat: "YYYY.MM.DD",
-            },
+              timeFormat: false,
+              utc: true,
+            } as any,
           },
           {
             type: "datetime",
@@ -54,7 +56,9 @@ export default defineConfig({
             label: "更新日",
             ui: {
               dateFormat: "YYYY.MM.DD",
-            },
+              timeFormat: false,
+              utc: true,
+            } as any,
           },
           {
             type: "image",
