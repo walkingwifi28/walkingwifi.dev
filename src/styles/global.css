@@ -88,11 +88,11 @@ footer {
 }
 
 .post h3 {
-    @apply text-xl font-semibold text-[var(--color-text)] mt-6 mb-2;
+    @apply text-xl font-semibold text-[var(--color-text)] mt-12 mb-2;
 }
 
 .post h4 {
-    @apply text-lg font-semibold text-[var(--color-text)] mt-5 mb-2;
+    @apply text-lg font-semibold text-[var(--color-text)] mt-8 mb-2;
 }
 
 .post p {
