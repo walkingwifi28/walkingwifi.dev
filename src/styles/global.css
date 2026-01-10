@@ -49,6 +49,9 @@
     --color-card-bg: #18181b;
     --color-header-bg: #27272a;
     --dot-size: 1px;
+    /* 白文字の膨張を抑制 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ベーススタイル */
