@@ -67,6 +67,7 @@ body {
     background-color: var(--color-bg);
     background-image: radial-gradient(circle, var(--color-bg-secondary) var(--dot-size), transparent var(--dot-size));
     background-size: 24px 24px;
+    background-attachment: fixed;
     color: var(--color-text);
     font-family: "Noto Sans JP", sans-serif;
     font-optical-sizing: auto;
