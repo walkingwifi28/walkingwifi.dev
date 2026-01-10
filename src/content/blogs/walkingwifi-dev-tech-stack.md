@@ -41,13 +41,13 @@ Nuxt.js
 
 Astro
 
-ブログはページ内のコンテンツが目まぐるしく変わるものでもないので、SSG(静的サイト生成)対応のフレームワークが適していると考え、Next.jsとNuxt.jsとAstroに絞り、Next.jsとNuxt.jsはブログ構築には過剰すぎるので、Astroを採用しました。
+ブログはページ内のコンテンツが頻繁に変わるものではありません。そのため、SSG（静的サイト生成）対応のフレームワークが適していると考えました。候補としてNext.js、Nuxt.js、Astroに絞りましたが、Next.jsとNuxt.jsはブログ構築には過剰な機能も多いため、Astroを採用しました。
 
-git commitで画像圧縮
+Git commitで画像圧縮。
 
-buildでogp画像生成
+buildでOGP画像生成。
 
-tinacmsの使用感
+TinaCMSの使用感。
 
 ## CMS（コンテンツ管理システム）
 
@@ -57,7 +57,7 @@ TinaCMSを採用しています。
 
 WordPressは従来型CMSに区分されます。
 
-当初はAPIベースCMSの一種であるmicroCMSを使用していましたが、記事内容もgitで管理したかったので、GitベースCMSにしました。
+当初はAPIベースCMSの一種であるmicroCMSを使用していましたが、記事内容もGitで管理したかったので、GitベースCMSにしました。
 
 Decap CMSやTinaCMSが候補に上がりますが、とりあえずはTinaCMSを採用しました。
 
