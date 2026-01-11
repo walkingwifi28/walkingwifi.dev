@@ -1,14 +1,15 @@
 ---
 title: walkingwifi.devを支える技術
-createdAt: 2026-01-08T22:28:26.648Z
-updatedAt: 2026-01-08T22:35:18.128Z
+createdAt: 2026-01-10T22:28:26.648Z
+updatedAt: 2026-01-10T22:35:18.128Z
+thumbnail: /walkingwifi-dev-teck-stack.jpg
 description: |-
   このブログ、WordPressは使っていません。
   エンジニアなら、フロントエンドとバックエンドでそれぞれ技術選定をして、カスタマイズ性・拡張性のあるブログを構築したいですよね。
   あとは記事をWordPressにベンダーロックインするのも気が引けるし、テーマをカスタムして万が一壊れたら怖い。
   それにコストも最小限にしたい。
   今回は、walkingwifi.devを支える技術についてお話しします。
-draft: true
+draft: false
 tags:
   - tag: src/content/tags/zatudan.md
 ---
