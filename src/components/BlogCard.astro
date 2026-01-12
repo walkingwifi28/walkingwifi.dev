@@ -3,7 +3,7 @@ import Tag from "./Tag.astro";
 import CalendarIcon from "./icons/CalendarIcon.astro";
 import RefreshIcon from "./icons/RefreshIcon.astro";
 import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 interface Props {
     blog: CollectionEntry<"blogs">;
@@ -11,27 +11,20 @@ interface Props {
 
 const { blog } = Astro.props;
 
-// タグ情報を取得（存在しないタグはスキップ）
-// TinaCMS のパス形式 "src/content/tags/xxx.md" から ID を抽出
-const extractTagId = (tagPath: string) => {
+// 全タグを取得
+const allTags = await getCollection("tags");
+
+// TinaCMS のパス形式 "src/content/tags/xxx.md" から ID を抽出し、タグを検索（大文字小文字を無視）
+const findTag = (tagPath: string) => {
     const match = tagPath.match(/src\/content\/tags\/(.+)\.md$/);
-    return match ? match[1] : null;
+    if (!match) return null;
+    const tagId = match[1].toLowerCase();
+    return allTags.find((t) => t.id.replace(/\.md$/, "").toLowerCase() === tagId) || null;
 };
 
-const tagPaths = blog.data.tags?.map((t) => t.tag) || [];
-const tagPromises = tagPaths.map(async (tagPath) => {
-    const tagId = extractTagId(tagPath);
-    if (!tagId) return null;
-    try {
-        const entry = await getEntry("tags", tagId);
-        return entry;
-    } catch {
-        return null;
-    }
-});
-
-const rawTags = await Promise.all(tagPromises);
-const tags = rawTags.filter((t) => t !== null);
+const tags = (blog.data.tags || [])
+    .map((t) => findTag(t.tag))
+    .filter((t) => t != null);
 
 // フロントマターから日付を取得
 const createdAt = blog.data.createdAt;

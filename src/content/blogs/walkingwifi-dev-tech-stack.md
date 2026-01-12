@@ -11,7 +11,8 @@ description: |-
   今回は、walkingwifi.devを支える技術についてお話しします。
 draft: false
 tags:
-  - tag: src/content/tags/zatudan.md
+  - tag: src/content/tags/Headless-CMS.md
+  - tag: src/content/tags/Astro.md
 ---
 
 このブログ、WordPressは使っていません。
